@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umer Shahid | Professional Resume</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #0284c7;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+            --sidebar-width: 300px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 2rem 0;
+        }
+
+        /* --- Floating Print Control Panel --- */
+        .print-bar {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .print-bar-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .print-bar-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .print-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .print-btn:hover {
+            background-color: #0369a1;
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* --- Resume Document Layout (A4 styled card) --- */
+        .resume-document {
+            background-color: #ffffff;
+            width: 820px;
+            margin: 4rem auto 2rem;
+            min-height: 1100px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            position: relative;
+        }
+
+        /* --- Sidebar Column --- */
+        .resume-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 2.5rem 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .header-meta {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .resume-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-item i {
+            color: var(--accent);
+            margin-top: 0.2rem;
+            width: 14px;
+        }
+
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .sidebar-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .sidebar-list li {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            padding-left: 0.75rem;
+            position: relative;
+        }
+
+        .sidebar-list li::before {
+            content: '▪';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        /* --- Main Body Column --- */
+        .resume-main {
+            flex: 1;
+            padding: 2.5rem;
+            background-color: #fff;
+        }
+
+        .summary-section {
+            margin-bottom: 2rem;
+        }
+
+        .summary-text {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        .main-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.35rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .main-section-title i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .experience-item {
+            margin-bottom: 1.75rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.4rem;
+        }
+
+        .experience-role {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .experience-org {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .experience-date {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        .experience-loc {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .experience-bullets {
+            list-style: none;
+            margin-top: 0.5rem;
+            padding-left: 0.25rem;
+        }
+
+        .experience-bullets li {
+            font-size: 0.875rem;
+            color: var(--secondary);
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .experience-bullets li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* --- PDF print media queries --- */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .print-bar {
+                display: none !important;
+            }
+            .resume-document {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                min-height: auto;
+            }
+            /* Chrome PDF Margins fixes */
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            .resume-sidebar {
+                background-color: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .sidebar-section-title {
+                color: var(--accent) !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+            }
+            .resume-title {
+                color: var(--accent) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Top Bar -->
+    <div class="print-bar">
+        <span class="print-bar-title">Umer Shahid | Resume / CV</span>
+        <div class="print-bar-actions">
+            <button class="back-btn" onclick="window.close();"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="print-btn" onclick="window.print();"><i class="fa-solid fa-print"></i> Save as PDF / Print</button>
+        </div>
+    </div>
+
+    <!-- Resume Document Sheet -->
+    <div class="resume-document">
+        
+        <!-- Left Sidebar Section -->
+        <aside class="resume-sidebar">
+            <div class="header-meta">
+                <h1 class="resume-name">Umer Shahid</h1>
+                <p class="resume-title">AI & ML Engineer</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="sidebar-block">
+                <h2 class="sidebar-section-title">Contact</h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+92 321 3327732</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span><a href="mailto:umershahid2291@gmail.com">umershahid2291@gmail.com</a></span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <span><a href="https://www.linkedin.com/in/umer-shahid-75079941b/" target="_blank">linkedin.com/in/umer-shahid-75079941b</a></span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Garden Town, Lahore, Punjab, PK 54000</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Technical Skills Section -->
+            <div class="sidebar-block">
+                <h2 class="sidebar-section-title">Core Skills</h2>
+                <ul class="sidebar-list">
+                    <li>Python programming</li>
+                    <li>C++ / Java development</li>
+                    <li>Deep Learning & CNN</li>
+                    <li>Object Detection (Mask R-CNN)</li>
+                    <li>TensorFlow / PyTorch / Keras</li>
+                    <li>Computer Vision (OpenCV)</li>
+                    <li>Flask Web Framework</li>
+                    <li>MySQL Database</li>
+                    <li>OOP & DSA Concepts</li>
+                    <li>HTML5 / CSS3 / JavaScript</li>
+                </ul>
+            </div>
+
+            <!-- Developer Tools Section -->
+            <div class="sidebar-block">
+                <h2 class="sidebar-section-title">Developer Tools</h2>
+                <ul class="sidebar-list">
+                    <li>VS Code</li>
+                    <li>Android Studio</li>
+                    <li>Google Colab</li>
+                    <li>GitHub Version Control</li>
+                </ul>
+            </div>
+
+            <!-- Certifications Section -->
+            <div class="sidebar-block">
+                <h2 class="sidebar-section-title">Certifications</h2>
+                <ul class="sidebar-list">
+                    <li>AI & Machine Learning Certification (DeepVision.AI)</li>
+                    <li>AI & Machine Learning Certification (Blackstone School of Law / University of London)</li>
+                </ul>
+            </div>
+
+            <!-- Languages Section -->
+            <div class="sidebar-block">
+                <h2 class="sidebar-section-title">Languages</h2>
+                <ul class="sidebar-list">
+                    <li>English (Professional)</li>
+                    <li>Urdu (Native)</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Right Main Content Section -->
+        <main class="resume-main">
+            <!-- Executive Summary -->
+            <section class="summary-section">
+                <h2 class="main-section-title"><i class="fa-solid fa-user-tie"></i> Professional Summary</h2>
+                <p class="summary-text">
+                    Highly analytical and driven Computer Science graduate specializing in Artificial Intelligence, Deep Learning, and Full Stack Web architectures. Possesses hands-on experience developing computer vision modules (CNNs, Mask R-CNN), data pipelines, and custom API-driven web applications. Demonstrated capability in engineering healthcare predictions and image classification products from ideation to deployment.
+                </p>
+            </section>
+
+            <!-- Education -->
+            <section class="summary-section">
+                <h2 class="main-section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">Bachelor of Science in Computer Science</span><br>
+                            <span class="experience-org">Superior University</span>
+                        </div>
+                        <div class="experience-date">
+                            Nov 2022 – June 2026
+                        </div>
+                    </div>
+                    <div class="experience-loc">Lahore, Punjab, PK</div>
+                </div>
+            </section>
+
+            <!-- Professional Experience -->
+            <section class="summary-section">
+                <h2 class="main-section-title"><i class="fa-solid fa-briefcase"></i> Experience & Training</h2>
+                
+                <!-- Experience Item 1 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">AI & Machine Learning Intern</span><br>
+                            <span class="experience-org">DeepVision.AI</span>
+                        </div>
+                        <div class="experience-date">
+                            Dec 2025 – March 2026
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Supported data preprocessing pipelines, normalization layers, and data loading modules.</li>
+                        <li>Configured and trained deep neural networks using PyTorch for predictive analytics.</li>
+                        <li>Collaborated with backend engineers to evaluate model inference performance.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">AI & Machine Learning Bootcamp Practitioner</span><br>
+                            <span class="experience-org">DeepVision.AI</span>
+                        </div>
+                        <div class="experience-date">
+                            Aug 2025 – Dec 2025
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Completed an intensive program focused on Deep Learning and Computer Vision implementations.</li>
+                        <li>Built and evaluated models utilizing TensorFlow, PyTorch, Keras, and OpenCV.</li>
+                        <li>Trained classifiers on real-world datasets, correcting for overfitting and class imbalances.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">AI/Deep Learning Bootcamp Trainee</span><br>
+                            <span class="experience-org">Superior University</span>
+                        </div>
+                        <div class="experience-date">
+                            Nov 2024 – March 2025
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Translated theoretical concepts into functional models covering CNNs, Mask R-CNN, and segmentation layers.</li>
+                        <li>Learned model optimization techniques to improve deployment speeds.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 4 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">Web Development Intern</span><br>
+                            <span class="experience-org">Superior University</span>
+                        </div>
+                        <div class="experience-date">
+                            Jan 2024 – September 2024
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Created layout structures, navigation bars, and landing page visual grids.</li>
+                        <li>Maintained clean, modular code bases using HTML5, CSS3, and JavaScript.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Key Projects -->
+            <section class="summary-section">
+                <h2 class="main-section-title"><i class="fa-solid fa-code-branch"></i> Selected Projects</h2>
+                
+                <!-- Project 1 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">Carelytics AI (Final Year Project)</span><br>
+                            <span class="experience-org">Flask, TensorFlow, PyTorch, MySQL, Tesseract OCR</span>
+                        </div>
+                        <div class="experience-date">
+                            June 2026
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Developed a smart medical advisor that processes scans (CT, X-ray) and PDF lab reports via OCR.</li>
+                        <li>Built a secure Flask Web Server for account storage and health analytics logging.</li>
+                        <li>Integrated model parameters to recommend nutritional and lifestyle adjustments.</li>
+                    </ul>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <span class="experience-role">Skin Cancer Classification</span><br>
+                            <span class="experience-org">Python, PyTorch, Keras, CNN, Google Colab</span>
+                        </div>
+                        <div class="experience-date">
+                            Jan 2025
+                        </div>
+                    </div>
+                    <ul class="experience-bullets">
+                        <li>Compiled dermoscopic images, partition training splits, and built custom CNN layers to classify tissue anomalies.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

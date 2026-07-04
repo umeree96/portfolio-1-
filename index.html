@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Portfolio of Umer Shahid - AI & Machine Learning Engineer & Full Stack Developer. Discover projects, experience, and skills in Deep Learning, Computer Vision, and Web Development.">
+    <title>Umer Shahid | AI & Machine Learning Engineer Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Particles -->
+    <canvas id="hero-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <span class="logo-accent">&lt;</span>Umer<span class="logo-accent">.S /&gt;</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="resume.html" class="btn btn-secondary nav-cv-btn" target="_blank">
+                    <i class="fa-solid fa-file-pdf"></i> View CV
+                </a>
+                <button class="mobile-nav-toggle" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <div class="badge-container">
+                    <span class="hero-badge"><i class="fa-solid fa-atom pulse-icon"></i> AI & ML Specialist</span>
+                </div>
+                <h1 class="hero-title">Hi, I'm <span class="gradient-text">Umer Shahid</span></h1>
+                <h2 class="hero-subtitle">
+                    I build <span class="typing-text">AI Systems & Intelligent Web Apps</span>
+                </h2>
+                <p class="hero-description">
+                    Computer Science graduate specializing in Deep Learning, Computer Vision, and Full Stack Development. Crafting robust AI models and high-performance applications from Lahore, Pakistan.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>Explore My Work</span> <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <span>Get In Touch</span> <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glow-sphere"></div>
+                <div class="interactive-card">
+                    <div class="card-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="card-title">model_training.py</span>
+                    </div>
+                    <div class="card-body">
+                        <pre><code><span class="keyword">import</span> torch
+<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn
+
+# Carelytics AI Core Network
+<span class="keyword">class</span> <span class="class-name">MedicalCNN</span>(nn.Module):
+    <span class="keyword">def</span> <span class="function-name">__init__</span>(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">3</span>)
+        self.pool = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>)
+        self.fc1 = nn.Linear(<span class="number">32</span> * <span class="number">112</span> * <span class="number">112</span>, <span class="number">512</span>)
+        self.fc2 = nn.Linear(<span class="number">512</span>, <span class="number">2</span>) # Binary Class
+        
+    <span class="keyword">def</span> <span class="function-name">forward</span>(self, x):
+        x = self.pool(torch.relu(self.conv1(x)))
+        x = torch.flatten(x, <span class="number">1</span>)
+        x = torch.relu(self.fc1(x))
+        <span class="keyword">return</span> self.fc2(x)
+
+model = MedicalCNN().to(<span class="string">"cuda"</span>)
+print(<span class="string">"Model initialized successfully."</span>)</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <a href="#about" aria-label="Scroll to About Section">
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">About Me</span>
+                    <h2 class="section-title">Bridging Code and Intelligence</h2>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-info">
+                        <h3>Who is Umer?</h3>
+                        <p class="lead-text">
+                            I am a passionate software engineer currently pursuing my Bachelor of Science in Computer Science at Superior University. 
+                        </p>
+                        <p>
+                            My professional journey revolves around developing AI models and full-stack web architectures. I specialize in applying Deep Learning algorithms (CNNs, Mask R-CNN) to solve real-world problems—like diagnosing medical reports or classifying medical imagery—while building robust, intuitive frontends and backends to host them.
+                        </p>
+                        <div class="info-meta-grid">
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-solid fa-location-dot"></i> Location</span>
+                                <span class="info-value">Garden Town, Lahore, Pakistan</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-solid fa-graduation-cap"></i> Education</span>
+                                <span class="info-value">BS in Computer Science (2022 - 2026)</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-solid fa-envelope"></i> Email</span>
+                                <span class="info-value"><a href="mailto:umershahid2291@gmail.com">umershahid2291@gmail.com</a></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label"><i class="fa-brands fa-linkedin"></i> LinkedIn</span>
+                                <span class="info-value"><a href="https://www.linkedin.com/in/umer-shahid-75079941b/" target="_blank">linkedin.com/in/umer-shahid-75079941b</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <span class="stat-number">4+</span>
+                            <span class="stat-title">Internships & Bootcamps</span>
+                            <p class="stat-desc">Hands-on industrial and bootcamp training in AI/ML & Web Development.</p>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-title">Practical Projects</span>
+                            <p class="stat-desc">End-to-end models, computer vision systems, and web deployments.</p>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-title">Model Accuracy</span>
+                            <p class="stat-desc">Achieved in custom image classification and computer vision benchmarks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">My Timeline</span>
+                    <h2 class="section-title">Experience & Training</h2>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item left scroll-reveal">
+                        <div class="timeline-dot"><i class="fa-solid fa-briefcase"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Dec 2025 – Mar 2026</span>
+                            <h3 class="role-title">AI & Machine Learning Intern</h3>
+                            <h4 class="company-name">DeepVision.AI</h4>
+                            <p class="role-description">
+                                Contributed to enterprise-level AI and Computer Vision initiatives.
+                            </p>
+                            <ul class="role-bullets">
+                                <li>Assisted in data preprocessing, pipeline construction, model training, and performance evaluation.</li>
+                                <li>Utilized Python, Machine Learning, and Deep Learning architectures for real-world analytical tasks.</li>
+                                <li>Collaborated across engineering teams to automate workflows and optimize model inferences.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item right scroll-reveal">
+                        <div class="timeline-dot"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Aug 2025 – Dec 2025</span>
+                            <h3 class="role-title">AI & Machine Learning Bootcamp</h3>
+                            <h4 class="company-name">DeepVision.AI</h4>
+                            <p class="role-description">
+                                Underwent rigorous hands-on training focusing on practical applications of Deep Learning.
+                            </p>
+                            <ul class="role-bullets">
+                                <li>Built, optimized, and evaluated machine learning models using TensorFlow, PyTorch, and Keras.</li>
+                                <li>Specialized in Computer Vision techniques, image segmentation, and object detection.</li>
+                                <li>Processed large-scale datasets, addressing data imbalance and overfitting issues.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item left scroll-reveal">
+                        <div class="timeline-dot"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Nov 2024 – Mar 2025</span>
+                            <h3 class="role-title">AI & Deep Learning Bootcamp</h3>
+                            <h4 class="company-name">Superior University</h4>
+                            <p class="role-description">
+                                Deep dived into modern deep learning research papers and concrete implementations.
+                            </p>
+                            <ul class="role-bullets">
+                                <li>Studied how AI/DL works on real objects, deploying optimized models in record time.</li>
+                                <li>Implemented advanced architectures including CNNs, Mask R-CNN, and custom object classification models.</li>
+                                <li>Translated theoretical research papers into functional, deployed Python code.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item right scroll-reveal">
+                        <div class="timeline-dot"><i class="fa-solid fa-code"></i></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Jan 2024 – Sept 2024</span>
+                            <h3 class="role-title">Web Development Intern</h3>
+                            <h4 class="company-name">Superior University</h4>
+                            <p class="role-description">
+                                Formulated layouts and interfaces for university department portals and local clients.
+                            </p>
+                            <ul class="role-bullets">
+                                <li>Designed and restructured site layouts, focusing on high engagement and visual clarity.</li>
+                                <li>Implemented responsive UI designs using semantic HTML, CSS grids, and vanilla JavaScript.</li>
+                                <li>Improved user retention rates by creating fluid, interactive user experiences.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Portfolio Showcase</span>
+                    <h2 class="section-title">Featured Projects</h2>
+                    <div class="underline"></div>
+                </div>
+
+                <!-- Project Filters -->
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="ai-ml">AI & Deep Learning</button>
+                    <button class="filter-btn" data-filter="web">Web Development</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="projects-grid">
+                    <!-- Project 1: Carelytics AI (FYP) -->
+                    <div class="project-card" data-category="ai-ml">
+                        <div class="project-img-wrapper">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link" data-project="carelytics">
+                                    <i class="fa-solid fa-expand"></i> View Details
+                                </a>
+                            </div>
+                            <div class="project-graphic carelytics-graphic">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                                <span class="graphic-label">Carelytics AI</span>
+                            </div>
+                            <span class="project-badge">Final Year Project</span>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Carelytics AI</h3>
+                            <p class="project-desc">
+                                AI-powered healthcare platform extracting medical reports and offering recommendations using OCR and deep learning.
+                            </p>
+                            <div class="project-tech">
+                                <span>Flask</span>
+                                <span>TensorFlow</span>
+                                <span>PyTorch</span>
+                                <span>Tesseract OCR</span>
+                                <span>MySQL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Skin Cancer Classification -->
+                    <div class="project-card" data-category="ai-ml">
+                        <div class="project-img-wrapper">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link" data-project="skin-cancer">
+                                    <i class="fa-solid fa-expand"></i> View Details
+                                </a>
+                            </div>
+                            <div class="project-graphic cancer-graphic">
+                                <i class="fa-solid fa-virus"></i>
+                                <span class="graphic-label">Skin Cancer DL</span>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Skin Cancer Classification</h3>
+                            <p class="project-desc">
+                                A CNN classification system built with PyTorch and Keras to diagnose cancer and non-cancer skin lesions from datasets.
+                            </p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>PyTorch</span>
+                                <span>Keras</span>
+                                <span>CNN</span>
+                                <span>Google Colab</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Fruit Classification -->
+                    <div class="project-card" data-category="ai-ml">
+                        <div class="project-img-wrapper">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link" data-project="fruit">
+                                    <i class="fa-solid fa-expand"></i> View Details
+                                </a>
+                            </div>
+                            <div class="project-graphic fruit-graphic">
+                                <i class="fa-solid fa-apple-whole"></i>
+                                <span class="graphic-label">Fruit Classifier</span>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Fruit Classification CNN</h3>
+                            <p class="project-desc">
+                                Custom CNN designed for real-time agricultural image classification, utilizing advanced image pre-processing.
+                            </p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>PyTorch</span>
+                                <span>Keras</span>
+                                <span>Computer Vision</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Restaurant Website -->
+                    <div class="project-card" data-category="web">
+                        <div class="project-img-wrapper">
+                            <div class="project-overlay">
+                                <a href="#" class="project-link" data-project="restaurant">
+                                    <i class="fa-solid fa-expand"></i> View Details
+                                </a>
+                            </div>
+                            <div class="project-graphic restaurant-graphic">
+                                <i class="fa-solid fa-utensils"></i>
+                                <span class="graphic-label">Restaurant UI</span>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Delicacy Restaurant</h3>
+                            <p class="project-desc">
+                                A responsive web design with interactive menus, dynamic item showcase, and seamless layout structures.
+                            </p>
+                            <div class="project-tech">
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>JavaScript</span>
+                                <span>VS Studio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">My Capabilities</span>
+                    <h2 class="section-title">Technical Expertise</h2>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="skills-grid">
+                    <!-- Dynamic Progress Rings -->
+                    <div class="skills-rings">
+                        <!-- SVG Gradients Defs -->
+                        <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+                            <defs>
+                                <linearGradient id="cyanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4facfe" />
+                                    <stop offset="100%" stop-color="#00f2fe" />
+                                </linearGradient>
+                                <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#7c3aed" />
+                                    <stop offset="100%" stop-color="#4facfe" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="ring-card">
+                            <div class="ring-circle">
+                                <svg width="120" height="120">
+                                    <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                                    <circle class="ring-fill ai-ring" cx="60" cy="60" r="50"></circle>
+                                </svg>
+                                <span class="ring-percent">90%</span>
+                            </div>
+                            <h4 class="ring-title">AI & ML Modeling</h4>
+                        </div>
+                        <div class="ring-card">
+                            <div class="ring-circle">
+                                <svg width="120" height="120">
+                                    <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                                    <circle class="ring-fill dl-ring" cx="60" cy="60" r="50"></circle>
+                                </svg>
+                                <span class="ring-percent">85%</span>
+                            </div>
+                            <h4 class="ring-title">Deep Learning / CNN</h4>
+                        </div>
+                        <div class="ring-card">
+                            <div class="ring-circle">
+                                <svg width="120" height="120">
+                                    <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                                    <circle class="ring-fill web-ring" cx="60" cy="60" r="50"></circle>
+                                </svg>
+                                <span class="ring-percent">80%</span>
+                            </div>
+                            <h4 class="ring-title">Web Development</h4>
+                        </div>
+                    </div>
+
+                    <!-- Skills Categorized -->
+                    <div class="skills-lists">
+                        <div class="skills-category-box">
+                            <h3 class="category-title"><i class="fa-solid fa-code"></i> Programming Languages</h3>
+                            <div class="skills-tags">
+                                <span class="skill-tag"><i class="fa-brands fa-python"></i> Python</span>
+                                <span class="skill-tag">C++</span>
+                                <span class="skill-tag"><i class="fa-brands fa-java"></i> Java</span>
+                                <span class="skill-tag"><i class="fa-solid fa-database"></i> SQL / MySQL</span>
+                                <span class="skill-tag"><i class="fa-brands fa-html5"></i> HTML5</span>
+                                <span class="skill-tag"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+                                <span class="skill-tag"><i class="fa-brands fa-js"></i> JavaScript</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category-box">
+                            <h3 class="category-title"><i class="fa-solid fa-cubes"></i> Libraries & Frameworks</h3>
+                            <div class="skills-tags">
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">PyTorch</span>
+                                <span class="skill-tag">Keras</span>
+                                <span class="skill-tag">Flask</span>
+                                <span class="skill-tag">OpenCV</span>
+                                <span class="skill-tag">Tesseract OCR</span>
+                                <span class="skill-tag">OOP & DSA</span>
+                            </div>
+                        </div>
+
+                        <div class="skills-category-box">
+                            <h3 class="category-title"><i class="fa-solid fa-screwdriver-wrench"></i> Developer Tools</h3>
+                            <div class="skills-tags">
+                                <span class="skill-tag">VS Code</span>
+                                <span class="skill-tag"><i class="fa-brands fa-android"></i> Android Studio</span>
+                                <span class="skill-tag">Google Colab</span>
+                                <span class="skill-tag"><i class="fa-brands fa-github"></i> Git & GitHub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Get in Touch</span>
+                    <h2 class="section-title">Let's Collaborate</h2>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="contact-wrapper">
+                    <!-- Contact Cards -->
+                    <div class="contact-info-cards">
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="card-details">
+                                <h3>Send an Email</h3>
+                                <p><a href="mailto:umershahid2291@gmail.com">umershahid2291@gmail.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="card-details">
+                                <h3>Call/WhatsApp</h3>
+                                <p><a href="tel:+923213327732">+92 321 3327732</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                            <div class="card-details">
+                                <h3>LinkedIn Profile</h3>
+                                <p><a href="https://www.linkedin.com/in/umer-shahid-75079941b/" target="_blank">linkedin.com/in/umer-shahid-75079941b</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
+                            <div class="card-details">
+                                <h3>Address</h3>
+                                <p>Garden Town, Lahore, Punjab, PK</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" required placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Opportunity / Collaboration">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" required placeholder="Let's discuss how we can work together..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Umer Shahid. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="mailto:umershahid2291@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/umer-shahid-75079941b/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="tel:+923213327732" aria-label="Phone"><i class="fa-solid fa-phone"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal Dialog -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body" id="modal-project-details">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/923213327732?text=Hi%20Umer%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp whatsapp-icon"></i>
+    </a>
+
+    <!-- Main JS script -->
+    <script src="script.js"></script>
+</body>
+</html>
