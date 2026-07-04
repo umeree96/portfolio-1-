@@ -1,425 +1,302 @@
 /* ==========================================
-   Umer Shahid Portfolio JavaScript
+   Umer Shahid Portfolio Script
    ========================================== */
 
+/* --- Initialization --- */
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize functions
-    initCanvasParticles();
+    initNavigation();
+    initScrollAnimations();
     initTypingEffect();
-    initNavbarScroll();
-    initMobileNav();
-    initProjectFilters();
+    initSkillBars();
     initProjectModals();
-    initSkillRings();
+    initThemeToggle();
     initContactForm();
-    initScrollReveal();
+    initBackToTop();
+    initParticles();
 });
 
-/* --- Canvas Particle Network --- */
-function initCanvasParticles() {
-    const canvas = document.getElementById("hero-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    
-    let particlesArray = [];
-    const numberOfParticles = 80;
-    
-    // Adjust canvas size
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+/* --- Smooth Navigation & Active Section --- */
+function initNavigation() {
+    const navLinks = document.querySelectorAll(".nav-link");
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    // Hamburger menu toggle
+    if (hamburger && navMenu) {
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
     }
-    
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    
-    // Mouse interaction coordinates
-    let mouse = {
-        x: null,
-        y: null,
-        radius: 120
-    };
-    
-    window.addEventListener("mousemove", (event) => {
-        // Only track mouse in hero area
-        if (event.clientY < window.innerHeight) {
-            mouse.x = event.clientX;
-            mouse.y = event.clientY;
-        } else {
-            mouse.x = null;
-            mouse.y = null;
-        }
-    });
-    
-    window.addEventListener("mouseout", () => {
-        mouse.x = null;
-        mouse.y = null;
+
+    // Smooth scroll for nav links
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href");
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+            // Close mobile menu
+            if (hamburger && navMenu) {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
+            }
+        });
     });
 
-    // Particle blueprint
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 0.8 - 0.4;
-            this.speedY = Math.random() * 0.8 - 0.4;
-            this.color = "rgba(0, 242, 254, 0.4)";
-        }
-        
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            
-            // Boundary collisions
-            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-            
-            // Mouse interactivity
-            if (mouse.x && mouse.y) {
-                let dx = this.x - mouse.x;
-                let dy = this.y - mouse.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const forceDirectionX = dx / distance;
-                    const forceDirectionY = dy / distance;
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    this.x += forceDirectionX * force * 2;
-                    this.y += forceDirectionY * force * 2;
-                }
+    // Active section highlighting on scroll
+    window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section[id]");
+        const scrollY = window.scrollY;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute("id");
+
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${sectionId}`) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+
+        // Navbar background on scroll
+        const navbar = document.querySelector(".navbar");
+        if (navbar) {
+            if (scrollY > 50) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
             }
         }
-        
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-    
-    // Create particle bank
-    function init() {
-        particlesArray = [];
-        for (let i = 0; i < numberOfParticles; i++) {
-            particlesArray.push(new Particle());
-        }
-    }
-    
-    // Connect particles with lines
-    function connect() {
-        let opacityValue = 1;
-        for (let a = 0; a < particlesArray.length; a++) {
-            for (let b = a; b < particlesArray.length; b++) {
-                let dx = particlesArray[a].x - particlesArray[b].x;
-                let dy = particlesArray[a].y - particlesArray[b].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 120) {
-                    opacityValue = 1 - (distance / 120);
-                    ctx.strokeStyle = `rgba(79, 172, 254, ${opacityValue * 0.15})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-    
-    // Animation loop
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-            particlesArray[i].draw();
-        }
-        connect();
-        requestAnimationFrame(animate);
-    }
-    
-    init();
-    animate();
+    });
 }
 
-/* --- Typing Banner Effect --- */
+/* --- Scroll Reveal Animations --- */
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                // Don't unobserve - allows re-animation if needed
+            }
+        });
+    }, observerOptions);
+
+    // Observe all elements with scroll-reveal class
+    document.querySelectorAll(".scroll-reveal").forEach(el => {
+        observer.observe(el);
+    });
+}
+
+/* --- Typing Effect for Hero Section --- */
 function initTypingEffect() {
-    const textElement = document.querySelector(".typing-text");
-    if (!textElement) return;
-    
-    const phrases = [
-        "AI Systems & Intelligent Web Apps",
-        "Deep Learning Models (CNNs)",
-        "Robust Web Applications",
-        "Computer Vision Solutions"
+    const typingElement = document.getElementById("typing-text");
+    if (!typingElement) return;
+
+    const texts = [
+        "AI & Machine Learning Engineer",
+        "Full-Stack Developer",
+        "Python & Data Science Expert",
+        "Deep Learning Specialist"
     ];
-    
-    let phraseIndex = 0;
+
+    let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typeSpeed = 100;
-    
+    const typingSpeed = 80;
+    const deletingSpeed = 40;
+    const pauseTime = 2000;
+
     function type() {
-        const currentPhrase = phrases[phraseIndex];
-        
+        const currentText = texts[textIndex];
+
         if (isDeleting) {
-            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            typingElement.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
-            typeSpeed = 40;
         } else {
-            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            typingElement.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
-            typeSpeed = 80;
         }
-        
-        if (!isDeleting && charIndex === currentPhrase.length) {
+
+        let timeout = isDeleting ? deletingSpeed : typingSpeed;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            timeout = pauseTime;
             isDeleting = true;
-            typeSpeed = 2000; // Pause at end of sentence
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500; // Pause before typing new phrase
+            textIndex = (textIndex + 1) % texts.length;
+            timeout = 500;
         }
-        
-        setTimeout(type, typeSpeed);
+
+        setTimeout(type, timeout);
     }
-    
+
     type();
 }
 
-/* --- Navbar Scroll Behavior & Active Highlighter --- */
-function initNavbarScroll() {
-    const navbar = document.querySelector(".navbar");
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
-    
-    window.addEventListener("scroll", () => {
-        // Shrink navbar
-        if (window.scrollY > 50) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-        
-        // Active link highlighting
-        let currentSectionId = "";
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                currentSectionId = section.getAttribute("id");
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${currentSectionId}`) {
-                link.classList.add("active");
-            }
-        });
-    });
-}
-
-/* --- Mobile Menu Trigger --- */
-function initMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const menu = document.querySelector(".nav-menu");
-    const links = document.querySelectorAll(".nav-link");
-    
-    if (!toggle || !menu) return;
-    
-    toggle.addEventListener("click", () => {
-        menu.classList.toggle("active");
-        const icon = toggle.querySelector("i");
-        if (menu.classList.contains("active")) {
-            icon.className = "fa-solid fa-xmark";
-        } else {
-            icon.className = "fa-solid fa-bars";
-        }
-    });
-    
-    // Close mobile menu when link is clicked
-    links.forEach(link => {
-        link.addEventListener("click", () => {
-            menu.classList.remove("active");
-            toggle.querySelector("i").className = "fa-solid fa-bars";
-        });
-    });
-}
-
-/* --- Project Portfolio Filters --- */
-function initProjectFilters() {
-    const buttons = document.querySelectorAll(".filter-btn");
-    const cards = document.querySelectorAll(".project-card");
-    
-    buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            // Remove active class from all
-            buttons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            
-            const filterValue = btn.getAttribute("data-filter");
-            
-            cards.forEach(card => {
-                const category = card.getAttribute("data-category");
-                
-                // Add scaling animations on show/hide
-                if (filterValue === "all" || category === filterValue) {
-                    card.style.display = "flex";
-                    setTimeout(() => {
-                        card.style.opacity = "1";
-                        card.style.transform = "scale(1)";
-                    }, 50);
-                } else {
-                    card.style.opacity = "0";
-                    card.style.transform = "scale(0.9)";
-                    setTimeout(() => {
-                        card.style.display = "none";
-                    }, 300);
-                }
-            });
-        });
-    });
-}
-
-/* --- Project Modals --- */
-const projectData = {
-    "carelytics": {
-        title: "Carelytics AI",
-        tag: "Final Year Project",
-        desc: "Carelytics AI is an advanced medical diagnostics assistant designed to empower clinicians and patients by parsing and interpreting laboratory analysis and imaging scans.",
-        bullets: [
-            "<strong>Report Processing via OCR:</strong> Incorporated Tesseract OCR pipelines to read raw laboratory blood panels, CT scan printouts, X-rays, and PDFs.",
-            "<strong>Health Analytics Engine:</strong> Programmed a decision-making model using PyTorch and TensorFlow to evaluate extracted markers for disease warning indicators.",
-            "<strong>Secure Backend Foundation:</strong> Constructed the server architecture using Flask coupled with a relational MySQL database to host credentials, files, and consultation histories.",
-            "<strong>Personalized Actionable Advice:</strong> Created a synthesis module generating tailored nutritional adjustments, exercise regiments, and primary healthcare suggestions based on clinical findings."
-        ]
-    },
-    "skin-cancer": {
-        title: "Skin Cancer Classification",
-        tag: "AI & Deep Learning",
-        desc: "Built a Deep Learning classifier tailored to review dermatological images and classify cell anomalies as benign skin lesions or malignant melanomas.",
-        bullets: [
-            "<strong>Data Pipeline engineering:</strong> Engineered normalizers, augmentation parameters (random flips, contrast shifts), and addressing class imbalance via weighted sampling.",
-            "<strong>Convolutional Neural Network:</strong> Configured a custom CNN architecture leveraging deep residual structures for feature maps learning.",
-            "<strong>Frameworks & Tools:</strong> Developed and verified models inside Google Colab using PyTorch and Keras backends.",
-            "<strong>Metric Assessment:</strong> Achieved outstanding accuracy margins verified through confusion matrices, F1-scores, and ROC curves."
-        ]
-    },
-    "fruit": {
-        title: "Fruit Classification CNN",
-        tag: "AI & Deep Learning",
-        desc: "Designed and trained an image classification neural network aimed at sorting and classifying agricultural products, serving as a prototype for automated sorting machinery.",
-        bullets: [
-            "<strong>Dataset Curation:</strong> Organized thousands of high-definition fruit category images, applying normalization and resizing scripts.",
-            "<strong>PyTorch Optimization:</strong> Constructed deep neural network layers using PyTorch featuring Batch Normalization, Max Pooling, and Dropout to combat overfitting.",
-            "<strong>Image Processing:</strong> Standardized image attributes utilizing OpenCV libraries.",
-            "<strong>High Precision Outcomes:</strong> Tuned hyperparameters to hit high classification precision values suitable for logistics deployments."
-        ]
-    },
-    "restaurant": {
-        title: "Delicacy Restaurant Website",
-        tag: "Web Development Project",
-        desc: "Created a highly styled, modern promotional platform and booking system for a fine dining restaurant client.",
-        bullets: [
-            "<strong>Interactive Menu Showcase:</strong> Programmed vanilla JavaScript loops to render menu categories dynamically with pricing and nutrition details.",
-            "<strong>Responsive Layout Engineering:</strong> Designed visual structures utilizing CSS grids, flexboxes, and CSS media queries to guarantee flawless operations across mobile, tablet, and desktop viewports.",
-            "<strong>VS Code Architecture:</strong> Written clean, modular HTML5 and CSS3 documents following clean organization standards.",
-            "<strong>Interactive Features:</strong> Added dynamic reservation request validation and elegant slider transitions for food features."
-        ]
-    }
-};
-
-function initProjectModals() {
-    const modal = document.getElementById("project-modal");
-    const closeBtn = document.querySelector(".close-modal");
-    const triggerLinks = document.querySelectorAll(".project-link");
-    const modalBody = document.getElementById("modal-project-details");
-    
-    if (!modal || !closeBtn || !modalBody) return;
-    
-    triggerLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const projectId = link.getAttribute("data-project");
-            const data = projectData[projectId];
-            
-            if (data) {
-                // Populate modal content
-                let bulletsHtml = data.bullets.map(b => `<li>${b}</li>`).join("");
-                
-                modalBody.innerHTML = `
-                    <span class="modal-project-cat">${data.tag}</span>
-                    <h3 class="modal-project-title">${data.title}</h3>
-                    <p class="modal-project-desc">${data.desc}</p>
-                    <h4 class="modal-section-title">Key Work & Responsibilities:</h4>
-                    <ul class="modal-project-bullets">
-                        ${bulletsHtml}
-                    </ul>
-                `;
-                
-                modal.classList.add("active");
-                document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
-            }
-        });
-    });
-    
-    closeBtn.addEventListener("click", () => {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto";
-    });
-    
-    // Close modal on clicking outside content area
-    window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.classList.remove("active");
-            document.body.style.overflow = "auto";
-        }
-    });
-}
-
-/* --- SVG Skill Ring Animations --- */
-function initSkillRings() {
-    const skillSection = document.getElementById("skills");
-    const rings = document.querySelectorAll(".ring-fill");
-    
-    if (!skillSection || rings.length === 0) return;
-    
-    // Match stroke dashoffset with percentage targets
-    const ringPercentages = {
-        "ai-ring": 0.90,  // 90%
-        "dl-ring": 0.85,  // 85%
-        "web-ring": 0.80  // 80%
-    };
+/* --- Skill Bars Animation --- */
+function initSkillBars() {
+    const skillBars = document.querySelectorAll(".skill-progress");
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                rings.forEach(ring => {
-                    let ringClass = "";
-                    if (ring.classList.contains("ai-ring")) ringClass = "ai-ring";
-                    if (ring.classList.contains("dl-ring")) ringClass = "dl-ring";
-                    if (ring.classList.contains("web-ring")) ringClass = "web-ring";
-                    
-                    const percent = ringPercentages[ringClass];
-                    if (percent) {
-                        const radius = 50;
-                        const circumference = 2 * Math.PI * radius; // 314
-                        const offset = circumference - (percent * circumference);
-                        ring.style.strokeDashoffset = offset;
-                    }
-                });
-                // Stop observing once animated
-                observer.unobserve(entry.target);
+                const bar = entry.target;
+                const targetWidth = bar.getAttribute("data-progress");
+                bar.style.width = targetWidth + "%";
             }
         });
-    }, { threshold: 0.3 });
-    
-    observer.observe(skillSection);
+    }, { threshold: 0.5 });
+
+    skillBars.forEach(bar => observer.observe(bar));
 }
 
-/* --- Contact Form Processing (Linked to Backend API) --- */
+/* --- Project Modals --- */
+function initProjectModals() {
+    const projectCards = document.querySelectorAll(".project-card");
+    const modal = document.getElementById("projectModal");
+    
+    if (!modal) return;
+
+    const modalClose = modal.querySelector(".modal-close");
+    const modalTitle = modal.querySelector(".modal-title");
+    const modalDescription = modal.querySelector(".modal-description");
+    const modalTechStack = modal.querySelector(".modal-tech-stack");
+    const modalLiveLink = modal.querySelector(".modal-live-link");
+    const modalGithubLink = modal.querySelector(".modal-github-link");
+
+    // Project data
+    const projectData = [
+        {
+            title: "AI Chatbot Assistant",
+            desc: "Built an advanced AI-powered customer support chatbot using natural language processing (NLP) techniques and deep learning models. The chatbot uses transformer-based architecture for context-aware responses and can handle multiple languages. Features include sentiment analysis, conversation history tracking, and seamless integration with CRM systems.",
+            tech: ["Python", "TensorFlow", "NLP", "FastAPI", "React", "PostgreSQL"],
+            live: "#",
+            github: "#"
+        },
+        {
+            title: "E-Commerce Analytics Dashboard",
+            desc: "Developed a comprehensive real-time analytics dashboard for e-commerce businesses. Features include sales forecasting using ARIMA/Prophet models, customer segmentation analysis, product recommendation engine, and interactive data visualizations. The dashboard processes millions of transactions daily with sub-second query performance.",
+            tech: ["Python", "Pandas", "Plotly", "Flask", "MongoDB", "Redis"],
+            live: "#",
+            github: "#"
+        },
+        {
+            title: "Image Classification System",
+            desc: "Created a high-accuracy image classification system using convolutional neural networks (CNNs) trained on custom datasets. The system achieves 98.5% accuracy on test data and supports real-time inference through an optimized deployment pipeline. Features include transfer learning, data augmentation, and model explainability tools.",
+            tech: ["PyTorch", "OpenCV", "Docker", "AWS", "Flask"],
+            live: "#",
+            github: "#"
+        },
+        {
+            title: "Smart Home IoT Platform",
+            desc: "Designed and built an intelligent IoT platform for smart home automation. The platform uses machine learning to learn user preferences and automatically adjusts lighting, temperature, and security settings. Features include voice control integration, energy usage optimization, and predictive maintenance alerts.",
+            tech: ["Python", "MQTT", "TensorFlow Lite", "React Native", "Node.js"],
+            live: "#",
+            github: "#"
+        },
+        {
+            title: "Stock Market Predictor",
+            desc: "Built a sophisticated stock market prediction system using LSTM neural networks and sentiment analysis from financial news. The system processes real-time market data and social media feeds to generate trading signals. Includes backtesting framework, risk assessment tools, and portfolio optimization algorithms.",
+            tech: ["Python", "Keras", "Scrapy", "PostgreSQL", "D3.js"],
+            live: "#",
+            github: "#"
+        },
+        {
+            title: "Restaurant Website & Booking",
+            desc: "Created a highly styled, modern promotional platform and booking system for a fine dining restaurant. Features include a dynamic menu system, real-time table reservation with capacity management, and an integrated loyalty program with QR code rewards.",
+            tech: ["HTML5", "CSS3", "JavaScript", "Node.js", "MongoDB"],
+            live: "#",
+            github: "#"
+        }
+    ];
+
+    projectCards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+            const data = projectData[index];
+            if (!data) return;
+
+            modalTitle.textContent = data.title;
+            modalDescription.textContent = data.desc;
+            
+            // Populate tech stack
+            modalTechStack.innerHTML = data.tech.map(t => `<span class="tech-tag">${t}</span>`).join("");
+            
+            if (modalLiveLink) modalLiveLink.href = data.live;
+            if (modalGithubLink) modalGithubLink.href = data.github;
+
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+
+        // Hover effects
+        card.addEventListener("mouseenter", () => {
+            card.style.transform = "translateY(-10px)";
+        });
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "translateY(0)";
+        });
+    });
+
+    // Close modal
+    if (modalClose) {
+        modalClose.addEventListener("click", () => {
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+    }
+
+    // Close on overlay click
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("active")) {
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+    });
+}
+
+/* --- Theme Toggle --- */
+function initThemeToggle() {
+    const themeToggle = document.getElementById("themeToggle");
+    if (!themeToggle) return;
+
+    const currentTheme = localStorage.getItem("theme") || "dark";
+    document.documentElement.setAttribute("data-theme", currentTheme);
+
+    themeToggle.addEventListener("click", () => {
+        const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    });
+}
+
+/* --- Contact Form Processing (Web3Forms API) --- */
 function initContactForm() {
     const form = document.getElementById("contactForm");
     if (!form) return;
@@ -450,25 +327,32 @@ function initContactForm() {
         submitBtn.disabled = true;
         
         try {
-            // Determine the API endpoint URL dynamically
-            // If opened via file:// protocol, direct requests to localhost:3000
-            let apiUrl = "/api/contact";
-            if (window.location.protocol === "file:") {
-                apiUrl = "http://localhost:3000/api/contact";
-            }
+            // ============================================================
+            // WEB3FORMS API — No backend server needed!
+            // Emails are sent directly to umershahid2291@gmail.com
+            // ============================================================
+            const WEB3FORMS_ACCESS_KEY = "82f7e28d-528d-49b1-8dee-719cd04a0413";
 
-            // Send API call to Express backend
-            const response = await fetch(apiUrl, {
+            const formData = {
+                access_key: WEB3FORMS_ACCESS_KEY,
+                name: nameVal,
+                email: emailVal,
+                subject: subjectVal || "New Portfolio Contact Form Submission",
+                message: messageVal,
+                from_name: "Portfolio Contact Form",
+                // Customize the email subject line
+                subject: subjectVal 
+                    ? `Portfolio Contact: ${subjectVal}` 
+                    : "New Portfolio Contact Form Submission"
+            };
+
+            const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
-                body: JSON.stringify({
-                    name: nameVal,
-                    email: emailVal,
-                    subject: subjectVal,
-                    message: messageVal
-                })
+                body: JSON.stringify(formData)
             });
             
             const result = await response.json();
@@ -479,22 +363,22 @@ function initContactForm() {
                     <div class="form-success-message" style="text-align: center; padding: 2.5rem 1.5rem; color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 8px; background: rgba(0, 242, 254, 0.05); animation: modalSlideIn 0.4s ease;">
                         <i class="fa-solid fa-circle-check" style="font-size: 3.5rem; margin-bottom: 1.25rem; color: #10b981;"></i>
                         <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 0.75rem; color: #fff;">Message Sent Successfully!</h3>
-                        <p style="color: var(--text-secondary); max-width: 450px; margin: 0 auto; line-height: 1.6;">${result.message}</p>
+                        <p style="color: var(--text-secondary); max-width: 450px; margin: 0 auto; line-height: 1.6;">Thank you for reaching out! I will get back to you as soon as possible.</p>
                     </div>
                 `;
             } else {
-                // Backend validation errors or handled issues
-                const errorMsg = result.errors ? result.errors.join("<br>") : (result.message || "Something went wrong.");
+                // Web3Forms returned an error
+                const errorMsg = result.message || "Something went wrong. Please try again.";
                 throw new Error(errorMsg);
             }
             
         } catch (error) {
             console.error("[Form Submit Error]:", error);
             
-            // Format a friendly error message for network connection failures
+            // Format a friendly error message
             let userFriendlyMsg = error.message;
             if (error instanceof TypeError && error.message.includes("fetch")) {
-                userFriendlyMsg = "Could not connect to the backend server API. Please ensure that you have started your local server by running <code>npm run dev</code> inside the project folder, and that it is listening on port 3000.";
+                userFriendlyMsg = "Could not connect to the email service. Please check your internet connection and try again.";
             }
             
             // Render an error message and restore the button
@@ -518,36 +402,130 @@ function initContactForm() {
     });
 }
 
-/* --- Timeline Scroll-Reveal Animations --- */
-function initScrollReveal() {
-    const revealItems = document.querySelectorAll(".scroll-reveal");
-    
-    if (revealItems.length === 0) return;
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("revealed");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
-    
-    // Add CSS properties to timeline items to support animation
-    revealItems.forEach(item => {
-        item.style.opacity = "0";
-        item.style.transform = "translateY(40px)";
-        item.style.transition = "opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
-        observer.observe(item);
-    });
-    
-    // Add dynamic CSS class handler
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-        .scroll-reveal.revealed {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+/* --- Back to Top Button --- */
+function initBackToTop() {
+    const backToTopBtn = document.getElementById("backToTop");
+    if (!backToTopBtn) return;
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add("visible");
+        } else {
+            backToTopBtn.classList.remove("visible");
         }
-    `;
-    document.head.appendChild(styleSheet);
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
 }
+
+/* --- Particle Background Effect --- */
+function initParticles() {
+    const canvas = document.getElementById("particles-canvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let animationId;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+            ctx.fillStyle = `rgba(0, 242, 254, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticleArray() {
+        particles = [];
+        const numParticles = Math.floor((canvas.width * canvas.height) / 15000);
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function connectParticles() {
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a + 1; b < particles.length; b++) {
+                const dx = particles[a].x - particles[b].x;
+                const dy = particles[a].y - particles[b].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    const opacity = 0.15 * (1 - distance / 120);
+                    ctx.strokeStyle = `rgba(0, 242, 254, ${opacity})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        connectParticles();
+        animationId = requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    initParticleArray();
+    animate();
+
+    window.addEventListener("resize", () => {
+        resizeCanvas();
+        initParticleArray();
+    });
+}
+
+/* --- Smooth Scroll for All Anchor Links --- */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    });
+});
